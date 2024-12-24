@@ -1,0 +1,45 @@
+vocabulary <http://example.com/vocabulary/basicfamily#> as basicfamily {
+
+	extends <http://www.w3.org/2001/XMLSchema#> as xsd
+
+	aspect Named
+
+	scalar property name [
+		domain Named
+		range xsd:string
+		functional
+	]
+
+	concept Family < Named
+
+	concept Person < Named [
+		restricts parents to max 2
+	]
+
+	relation members [
+		from Family
+		to Person
+	]
+
+	concept Man < Person
+
+	concept Woman < Person
+
+	relation parents [
+		from Person
+		to Person
+		reverse children
+	]
+
+	relation mother [
+		from Person
+		to Woman
+		functional
+	] << parents
+
+	relation father [
+		from Person
+		to Man
+		functional
+	] << parents
+}
